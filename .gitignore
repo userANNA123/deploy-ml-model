@@ -1,0 +1,38 @@
+# === Environnements Python ===
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === Caches et fichiers temporaires ===
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+
+# === Données locales ===
+data/
+!data/raw/
+!data/processed/
+*.csv
+*.xlsx
+*.json
+*.zip
+
+# === Modèles ML ===
+*.pkl
+*.joblib
+*.sav
+*.h5
+
+# === VS Code ===
+.vscode/
+
+# === Notebooks convertis ===
+*.nbconvert.ipynb
