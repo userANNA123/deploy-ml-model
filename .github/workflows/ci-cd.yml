@@ -1,0 +1,35 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Push to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "harba.anna@gmail.com"
+          git config --global user.name "Anna"
+          huggingface-cli login --token $HF_TOKEN
+          huggingface-cli repo create deploy-ml-model --type space --yes
+          huggingface-cli upload ./ --repo-type space --repo-id userANNA123/deploy-ml-model --token $HF_TOKEN
+
+
