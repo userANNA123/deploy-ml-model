@@ -7,8 +7,7 @@ on:
 
 env:
   PYTHON_VERSION: '3.11'
-  # عدّلي اسم المستخدم/السبايس لو مختلف
-  SPACE_ID: userANNA123/deploy-ml-model
+  SPACE_ID: userANNA123/deploy-ml-model   # <— ton user/space (pas "spaces/...")
 
 jobs:
   test:
@@ -16,11 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Configure Git
+      - name: Configure Git (avoid 128)
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$(pwd)"
+          git rev-parse --is-inside-work-tree || true
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
@@ -47,11 +48,13 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - name: Configure Git
+      - name: Configure Git (avoid 128)
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$(pwd)"
+          git rev-parse --is-inside-work-tree || true
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
@@ -68,23 +71,43 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
-      - name: Configure Git
+
+      - name: Configure Git (avoid 128)
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$(pwd)"
+          git rev-parse --is-inside-work-tree
+
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+
       - name: Install Hugging Face Hub (CLI)
         run: |
           python -m pip install --upgrade pip
           python -m pip install "huggingface_hub>=0.23.0"
+
+      # DEBUG: vérifier le token + versions
+      - name: Debug HF env
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python -c "import sys; print('Python', sys.version)"
+          python -m huggingface_hub.cli --help >/dev/null 2>&1 && echo 'HF CLI OK' || (echo 'HF CLI NOT FOUND' && exit 127)
+          python -m huggingface_hub.cli whoami --token "$HF_TOKEN" || (echo 'HF whoami failed -> token invalide ?' && exit 2)
+
+      - name: Ensure app entry exists
+        run: |
+          test -f app.py && echo "app.py found" || (echo "::error::app.py missing at repo root"; exit 3)
+
       - name: Create or update Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python -m huggingface_hub.cli repo create "$SPACE_ID" --type space --yes --token "$HF_TOKEN"
+
       - name: Upload to Space (exclude junk)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
@@ -93,6 +116,8 @@ jobs:
             --repo "$SPACE_ID" \
             --repo-type space \
             --token "$HF_TOKEN" \
-            --exclude ".git/**" ".github/**" "tests/**" "notebooks/**" "**/*.ipynb_checkpoints/**"
+            --exclude ".git/**" ".github/**" "tests/**" "notebooks/**" "**/*.ipynb_checkpoints/**" \
+            --verbose
+
 
 
