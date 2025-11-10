@@ -82,28 +82,42 @@ jobs:
       - name: Ensure app.py exists
         run: |
           test -f app.py && echo "✅ app.py found" || (echo "::error::app.py missing at repo root"; exit 3)
-      - name: Create/Update Space & Upload via HfApi
+            - name: Create/Update Space & Upload via HfApi
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python - <<'PY'
-          import os
-          from huggingface_hub import HfApi, upload_folder
+          import os, sys
+          from huggingface_hub import HfApi, upload_folder, HfHubHTTPError
+
           space_id = os.environ["SPACE_ID"]
           token = os.environ["HF_TOKEN"]
           api = HfApi(token=token)
+
           print(f"Ensuring Space exists: {space_id}")
-          api.create_repo(repo_id=space_id, repo_type="space", exist_ok=True)
+          try:
+              api.create_repo(
+                  repo_id=space_id,
+                  repo_type="space",
+                  space_sdk="gradio",   # <- IMPORTANT: choisis le SDK (gradio/streamlit/docker/static)
+                  exist_ok=True
+              )
+          except HfHubHTTPError as e:
+              print(f"Note: create_repo returned: {e}", file=sys.stderr)
+
           print("Uploading folder…")
           upload_folder(
               folder_path=".",
               repo_id=space_id,
               repo_type="space",
               token=token,
-              ignore_patterns=[".git/*",".github/*","tests/*","notebooks/*","**/.ipynb_checkpoints/*"]
+              ignore_patterns=[
+                  ".git/*", ".github/*", "tests/*", "notebooks/*", "**/.ipynb_checkpoints/*"
+              ]
           )
           print("✅ Upload complete.")
           PY
+
 
 
 
