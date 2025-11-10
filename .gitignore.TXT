@@ -36,4 +36,3 @@ data/
 
 # === Notebooks convertis ===
 *.nbconvert.ipynb
-venv/
