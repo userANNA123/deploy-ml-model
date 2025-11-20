@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from .schemas import PredictionRequest, PredictionResponse
-from .ml_model import predict
+from .ml_model import predict_from_dict
 
 app = FastAPI(
-    title="ML Prediction API",
-    description="API pour exposer un modèle de machine learning",
+    title="Churn Prediction API",
+    description="API pour exposer le modèle RandomForest du projet 4",
     version="1.0.0",
 )
 
@@ -15,11 +15,9 @@ def health_check():
 @app.post("/predict", response_model=PredictionResponse)
 def predict_endpoint(payload: PredictionRequest):
     try:
-        result = predict(
-            surface=payload.surface,
-            nb_rooms=payload.nb_rooms,
-            year_built=payload.year_built
-        )
+        data = payload.dict()
+        result = predict_from_dict(data)
         return PredictionResponse(prediction=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
