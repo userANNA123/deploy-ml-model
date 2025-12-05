@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Literal, Optional
 
+
 class PredictionRequest(BaseModel):
     age: int = Field(..., ge=16, le=80)
     annee_experience_totale: int = Field(..., ge=0, le=60)
@@ -9,6 +10,19 @@ class PredictionRequest(BaseModel):
     nb_formations_suivies: int = Field(..., ge=0)
     nombre_heures_travaillees: float = Field(..., ge=0)
     frequence_deplacement: Literal["Jamais", "Rarement", "Souvent"]
+
+    class Config:  # pour Pydantic v1
+        schema_extra = {
+            "example": {
+                "age": 30,
+                "annee_experience_totale": 5,
+                "revenu_mensuel": 2500,
+                "distance_domicile_travail": 10,
+                "nb_formations_suivies": 2,
+                "nombre_heures_travaillees": 40,
+                "frequence_deplacement": "Rarement",
+            }
+        }
 
 class PredictionResponse(BaseModel):
     prediction: int  # 0 = reste, 1 = churn 
