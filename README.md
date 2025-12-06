@@ -1,5 +1,3 @@
-<a id="readme-top"></a>
-
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -8,66 +6,118 @@
 [![License][license-shield]][license-url]
 
 <br />
-<div align="center">
-  <a href="https://github.com/USERNAME/REPO">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+<p align="center">
+  <a href="#">
+    <img src="https://via.placeholder.com/120" alt="Logo" width="120">
   </a>
 
-  <h3 align="center">PROJECT NAME</h3>
+  <h3 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face 🚀</h3>
 
   <p align="center">
-    Short project description — what it does, and why it exists 💡
-    <br />
-    <a href="https://github.com/USERNAME/REPO"><strong>Explore the docs »</strong></a>
-    <br /><br />
-    <a href="https://github.com/USERNAME/REPO">View Demo</a>
-    &middot;
-    <a href="https://github.com/USERNAME/REPO/issues?q=is%3Aissue+is%3Aopen">Report Bug</a>
-    &middot;
-    <a href="https://github.com/USERNAME/REPO/issues?q=is%3Aissue">Request Feature</a>
+   Un projet complet démontrant comment déployer un modèle ML en production avec une pipeline CI/CD.
+   <br />
+   <a href="#">Explorer la documentation »</a>
+   <br />
+   <br />
+   <a href="#">Voir la Demo</a>
+   ·
+   <a href="#">Signaler un Bug</a>
+   ·
+   <a href="#">Demander une Fonctionnalité</a>
   </p>
-</div>
+</p>
 
 ---
 
-## 📖 Table of Contents
+## 🧭 Table of Contents
 
-- [About The Project](#about-the-project)  
-- [Built With](#built-with)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-- [Usage](#usage)  
-- [Roadmap](#roadmap)  
-- [Contributing](#contributing)  
-- [License](#license)  
-- [Contact](#contact)  
-- [Acknowledgments](#acknowledgments)
+- [À propos du projet](#à-propos-du-projet)
+- [Objectifs](#objectifs)
+- [Architecture du projet](#architecture-du-projet)
+- [Pipeline CI/CD](#pipeline-cicd)
+- [Technologies utilisées](#technologies-utilisées)
+- [Installation](#installation)
+- [Exécution locale](#exécution-locale)
+- [Déploiement](#déploiement)
+- [Auteur](#auteur)
 
 ---
 
-## 🧐 About The Project
+## 📌 À propos du projet
 
-Describe your project: what problem it solves, who it's for, and why it's useful.
+Ce projet consiste à déployer un modèle Machine Learning dans un environnement cloud en utilisant :
 
-Use this space to give context, what motivated the project, and what it aims to achieve.
+- **FastAPI ou Gradio** pour exposer une interface simple  
+- **Hugging Face Spaces** pour héberger l’application  
+- **GitHub Actions (CI/CD)** pour automatiser :
+  - les tests  
+  - la construction  
+  - et le déploiement automatique  
 
-### Built With
+Cela garantit que chaque modification poussée dans la branche `main` est automatiquement :
 
-List major frameworks / libraries / tools — e.g.:
-
-- Python  
-- FastAPI  
-- scikit-learn  
-- SQLAlchemy  
+✔ testée  
+✔ validée  
+✔ déployée  
 
 ---
 
-## 🚀 Getting Started
+## 🎯 Objectifs
 
-### Prerequisites
+- Mettre en place un pipeline complet CI/CD  
+- Automatiser les tests unitaires  
+- Générer une application web simple pour exposer le modèle  
+- Déployer automatiquement sur **Hugging Face Spaces**  
 
-What things you need to install the software and how to install them:
+---
+
+## 🏗 Architecture du projet
+
+deploy-ml-model/
+├── app.py
+├── requirements.txt
+├── .github/
+│ └── workflows/
+│ └── ci-cd.yml
+├── tests/
+├── src/
+└── README.md
+
+---
+
+## ⚙️ Pipeline CI/CD
+
+Voici les étapes automatisées par GitHub Actions :
+
+1️⃣ **Tests**  
+Exécute pytest pour vérifier que le code fonctionne.
+
+2️⃣ **Build**  
+Installe les dépendances et vérifie que tout compile.
+
+3️⃣ **Déploiement Automatique**  
+Le pipeline :
+- crée ou met à jour le Space Hugging Face  
+- upload automatiquement les fichiers du repo  
+- relance l’application en ligne  
+
+---
+
+## 🧰 Technologies utilisées
+
+| Outil | Usage |
+|-------|--------|
+| **Python 3.11** | Développement |
+| **Gradio** | Interface utilisateur simple |
+| **HuggingFace Hub** | Déploiement cloud |
+| **GitHub Actions** | Automatisation CI/CD |
+| **Pytest** | Tests unitaires |
+
+---
+
+## 🛠 Installation
 
 ```bash
+git clone https://github.com/userANNA123/deploy-ml-model.git
+cd deploy-ml-model
 pip install -r requirements.txt
