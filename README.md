@@ -13,7 +13,11 @@
   <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" alt="Logo" width="120">
 </p>
 
-<h2 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face 🚀</h2>
+<h2 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face le développement d'API avec FastAPI, 
+
+les tests unitaires avec Pytest, 
+
+et la gestion des versions avec Git.  </h2>
 
 <p align="center">
   Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.  
