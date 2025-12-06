@@ -1,13 +1,33 @@
-Déploiement d’un Modèle de Machine Learning avec CI/CD et Hugging Face
- À propos du projet
+<!-- PROJECT SHIELDS -->
+![Contributors](https://img.shields.io/github/contributors/userANNA123/deploy-ml-model.svg?style=for-the-badge)
+![Forks](https://img.shields.io/github/forks/userANNA123/deploy-ml-model.svg?style=for-the-badge)
+![Stargazers](https://img.shields.io/github/stars/userANNA123/deploy-ml-model.svg?style=for-the-badge)
+![Issues](https://img.shields.io/github/issues/userANNA123/deploy-ml-model.svg?style=for-the-badge)
+![MIT License](https://img.shields.io/github/license/userANNA123/deploy-ml-model.svg?style=for-the-badge)
+![CI/CD](https://img.shields.io/github/actions/workflow/status/userANNA123/deploy-ml-model/ci-cd.yml?label=CI%2FCD&style=for-the-badge)
 
-Ce projet consiste à déployer un modèle de Machine Learning dans un environnement cloud en utilisant :
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="#">
+    <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" alt="Logo" width="120">
+  </a>
 
-FastAPI / Gradio pour exposer une interface simple
+  <h3 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face</h3>
 
-Hugging Face Spaces pour héberger l’application
+  <p align="center">
+    Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.
+    <br />
+    <a href="#">📘 Explorer la documentation</a>
+    ·
+    <a href="#">🐞 Reporter un bug</a>
+    ·
+    <a href="#">✨ Demander une fonctionnalité</a>
+  </p>
+</p>
 
-GitHub Actions (CI/CD) pour automatiser les tests, la construction et le déploiement
+---
+
 
 Ce pipeline garantit que chaque modification poussée dans la branche main est automatiquement :
 
