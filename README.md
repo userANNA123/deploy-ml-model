@@ -1,73 +1,127 @@
-<a id="readme-top"></a>
+Déploiement d’un Modèle de Machine Learning avec CI/CD et Hugging Face
+ À propos du projet
 
-<!-- PROJECT SHIELDS -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![License][license-shield]][license-url]
+Ce projet consiste à déployer un modèle de Machine Learning dans un environnement cloud en utilisant :
 
-<br />
-<div align="center">
-  <a href="https://github.com/USERNAME/REPO">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+FastAPI / Gradio pour exposer une interface simple
 
-  <h3 align="center">PROJECT NAME</h3>
+Hugging Face Spaces pour héberger l’application
 
-  <p align="center">
-    Short project description — what it does, and why it exists 💡
-    <br />
-    <a href="https://github.com/USERNAME/REPO"><strong>Explore the docs »</strong></a>
-    <br /><br />
-    <a href="https://github.com/USERNAME/REPO">View Demo</a>
-    &middot;
-    <a href="https://github.com/USERNAME/REPO/issues?q=is%3Aissue+is%3Aopen">Report Bug</a>
-    &middot;
-    <a href="https://github.com/USERNAME/REPO/issues?q=is%3Aissue">Request Feature</a>
-  </p>
-</div>
+GitHub Actions (CI/CD) pour automatiser les tests, la construction et le déploiement
 
----
+Ce pipeline garantit que chaque modification poussée dans la branche main est automatiquement :
 
-## 📖 Table of Contents
+testée
 
-- [About The Project](#about-the-project)  
-- [Built With](#built-with)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-- [Usage](#usage)  
-- [Roadmap](#roadmap)  
-- [Contributing](#contributing)  
-- [License](#license)  
-- [Contact](#contact)  
-- [Acknowledgments](#acknowledgments)
+validée
 
----
+déployée en production
 
-## 🧐 About The Project
+ Objectifs principaux
 
-Describe your project: what problem it solves, who it's for, and why it's useful.
+Mettre en place un pipeline CI/CD complet
 
-Use this space to give context, what motivated the project, and what it aims to achieve.
+Déployer automatiquement un modèle ML sur Hugging Face
 
-### Built With
+Automatiser les tests unitaires
 
-List major frameworks / libraries / tools — e.g.:
+Gérer différents environnements : développement → production
 
-- Python  
-- FastAPI  
-- scikit-learn  
-- SQLAlchemy  
+Assurer une qualité continue du code
 
----
+ Architecture du projet
+deploy-ml-model/
+│
+├── app.py              # Application Gradio exposée
+├── requirements.txt    # Dépendances
+├── tests/              # Tests unitaires (pytest)
+│   └── test_sanity.py
+│
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml   # Pipeline CI/CD complet
+│
+└── README.md           # Documentation
 
-## 🚀 Getting Started
+🔧 Technologies utilisées
+Technologie	Rôle
+Python 3.11	Langage principal
+Gradio	Interface Web
+Hugging Face Hub	Hébergement de l'application
+GitHub Actions	Automatisation CI/CD
+Pytest	Exécution des tests unitaires
+⚙️ Pipeline CI/CD – Explication
 
-### Prerequisites
+Le fichier .github/workflows/ci-cd.yml comporte 3 jobs :
 
-What things you need to install the software and how to install them:
+✔️ 1. Tests
 
-```bash
+Installe Python + dépendances
+
+Exécute :
+
+pytest
+
+
+Valide que le code fonctionne avant de continuer
+
+✔️ 2. Build
+
+Vérifie que les dépendances sont installables
+
+S’assure que le projet peut être construit sans erreur
+
+✔️ 3. Déploiement automatique
+
+Si les étapes précédentes réussissent, la mise en production est déclenchée :
+
+Création / mise à jour automatique du Space Hugging Face
+
+Upload du projet via HfApi
+
+Déploiement instantané 
+
+📄 Exemple de code (app.py)
+import gradio as gr
+
+def greet(name):
+    return f"Hello {name}! 
+
+demo = gr.Interface(
+    fn=greet,
+    inputs="text",
+    outputs="text",
+    title="Hello Space",
+    description="Application ML déployée automatiquement avec CI/CD "
+)
+
+if __name__ == "__main__":
+    demo.launch()
+
+Tests
+
+Un test minimal a été créé pour valider la structure :
+
+def test_ok():
+    assert 1 + 1 == 2
+
+Déploiement
+
+Le déploiement est automatique :
+
+Tu fais un git push origin main
+
+GitHub Actions lance le pipeline
+
+Le Space Hugging Face est mis à jour
+
+L'application est reconstruite et mise en ligne
+
+ Lien vers l’application
+
+ (Ajoute ton lien Hugging Face ici une fois le déploiement final terminé)
+
+ Auteur
+
+Projet réalisé par Anna HARBA, dans le cadre du projet OpenClassrooms – Data Analyst.
 pip install -r requirements.txt
