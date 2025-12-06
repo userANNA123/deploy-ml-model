@@ -29,21 +29,42 @@ et la gestion des versions avec Git.  </h2>
 
 ---
 
-##  ce projet ?
+ Description du Projet
 
-Dans ce projet, vous allez consolider  compétences en déployant un modèle de Machine Learning dans un environnement prêt pour la production.
+Ce projet consiste à déployer un modèle de Machine Learning en production à l’aide de FastAPI.
+Le modèle est un Random Forest qui prédit si une personne (employé / client) risque de quitter l’entreprise (churn / attrition) à partir de caractéristiques professionnelles.
 
+Ce projet met en place :
 
--  **Le développement d’API avec FastAPI**
--  **Les tests unitaires avec Pytest**
--  **La gestion des versions avec Git**
--  **La création d’un pipeline CI/CD avec GitHub Actions**
--  **Le déploiement sur Hugging Face Spaces (Gradio)**
-- **L’organisation d’un projet ML conforme aux standards professionnels**
+✅ Une API REST avec FastAPI pour exposer le modèle
 
-Ces notions sont indispensables pour industrialiser un modèle ML et garantir sa fiabilité.
+✅ Un schéma d’entrée clairement défini avec Pydantic
 
----
+✅ Un modèle Random Forest pré-entraîné et chargé depuis un fichier
+
+✅ Une documentation interactive automatique de l’API (Swagger / OpenAPI)
+
+✅ Une base pour les tests unitaires et fonctionnels avec Pytest
+
+Client : Futurisys
+Contexte : Projet professionnel – Déploiement d’un modèle ML en production
+Auteur : ANNA <Ton nom complet>
+
+🎯 Livrables
+
+✅ Dépôt Git structuré (code, modèle, tests, documentation)
+
+✅ API FastAPI fonctionnelle exposant un endpoint de prédiction
+
+✅ Modèle Random Forest sérialisé (par ex. model/random_forest.pkl)
+
+✅ Schémas Pydantic pour la validation des données d’entrée/sortie
+
+✅ Documentation Swagger / OpenAPI (via FastAPI)
+
+✅ README détaillé expliquant installation, utilisation et architecture
+
+✅ (Optionnel) Tests Pytest pour vérifier le bon fonctionnement du modèle et de l’API
 
 ## Étapes du projet (selon OpenClassrooms)
 
@@ -87,122 +108,318 @@ Ces notions sont indispensables pour industrialiser un modèle ML et garantir sa
 ---
 
 ## 🏗️ Architecture du projet
+project/
+│── app/
+│   ├── main.py              # Point d'entrée FastAPI
+│   ├── api.py               # Routes de l'API (si séparé)
+│   ├── models.py            # Modèles SQLAlchemy (si BD utilisée)
+│   ├── schemas.py           # Schémas Pydantic (PredictionRequest, PredictionResponse)
+│   ├── services.py          # Logique de prédiction / chargement du modèle
+│   ├── database.py          # Connexion à la base PostgreSQL (optionnel)
+│── model/
+│   ├── random_forest.pkl    # Modèle ML sauvegardé
+│   ├── preprocessor.pkl     # Prétraitement (si utilisé)
+│── tests/
+│   ├── test_api.py          # Tests de l'API
+│   ├── test_model.py        # Tests du modèle
+│── requirements.txt         # Dépendances Python
+│── README.md                # Documentation principale
+│── .env.example             # Exemple de configuration d'environnement
 
+🛠️ Installation
+🔹 Prérequis
 
-deploy-ml-model/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-├── src/
-│ ├── app/
-│ │ ├── api.py
-│ │ ├── model.py
-│ │ └── schemas.py
-│ └── db/
-│ └── config.py
-│
-├── tests/
-│ ├── test_api.py
-│ └── test_sanity.py
-│
-└── .github/
-└── workflows/
-└── ci-cd.yml
+Python 3.9 ou supérieur
 
-yaml
+(Optionnel mais recommandé) PostgreSQL si tu enregistres les prédictions dans une base
+
+Git
+
+Un compte GitHub (pour versionner le projet)
+
+🔹 Cloner le dépôt
+
+git clone https://github.com/<ton-utilisateur>/<ton-repo>.git
+cd <ton-repo>
+
+🔹 Créer un environnement virtuel
+bash
 Copy code
-
-└── README.md           # Documentation
-
----
-
-## Installation
-
-```bash
-git clone https://github.com/userANNA123/deploy-ml-model.git
-cd deploy-ml-model
+python -m venv venv
+source venv/bin/activate      # Sur Linux / macOS
+venv\Scripts\activate         # Sur Windows
+🔹 Installer les dépendances
+bash
+Copy code
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
+⚙️ Configuration (optionnel : base de données)
 
-Technologies utilisées
-Technologie	Rôle
-Python 3.11	Langage principal
-Gradio	Interface Web
-Hugging Face Hub	Hébergement de l'application
-GitHub Actions	Automatisation CI/CD
-Pytest	Exécution des tests unitaires
- Pipeline CI/CD – Explication
 
-Le fichier .github/workflows/ci-cd.yml comporte 3 jobs :
+env
+Copy code
+# Database (optionnel)
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/ml_db
 
-✔️ 1. Tests
+# API
+API_HOST=0.0.0.0
+API_PORT=8000
 
-Installe Python + dépendances
+# Environment
+ENVIRONMENT=development
+DEBUG=True
 
-Exécute :
 
+📖 Utilisation
+🔹 Démarrer l’API
+En développement (rechargement automatique) :
+
+bash
+Copy code
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+En production (sans --reload) :
+
+bash
+Copy code
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+L’API sera accessible à l’adresse :
+👉 http://localhost:8000
+
+🔹 Documentation interactive
+Une fois l’API démarrée, tu peux accéder à :
+
+Swagger UI : http://localhost:8000/docs
+
+ReDoc : http://localhost:8000/redoc
+
+Schéma OpenAPI : http://localhost:8000/openapi.json
+
+📡 Exemples de requêtes
+✅ Endpoint de prédiction
+URL : POST http://localhost:8000/predict
+
+Body JSON d’exemple (adapté à ton PredictionRequest) :
+
+json
+Copy code
+{
+  "age": 34,
+  "annee_experience_totale": 5,
+  "revenu_mensuel": 2500.0,
+  "distance_domicile_travail": 7.5,
+  "nb_formations_suivies": 2,
+  "nombre_heures_travaillees": 38.0,
+  "frequence_deplacement": "Rarement"
+}
+Réponse JSON (exemple) :
+
+json
+Copy code
+{
+  "prediction": 0
+}
+où :
+
+0 = reste
+
+1 = churn / départ
+
+💻 Exemple avec curl
+bash
+Copy code
+curl -X POST "http://localhost:8000/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "age": 34,
+    "annee_experience_totale": 5,
+    "revenu_mensuel": 2500.0,
+    "distance_domicile_travail": 7.5,
+    "nb_formations_suivies": 2,
+    "nombre_heures_travaillees": 38.0,
+    "frequence_deplacement": "Rarement"
+  }'
+🧪 Tests
+Les tests sont écrits avec Pytest et couvrent :
+
+la bonne réponse de l’API (/predict)
+
+la validation des données par les schémas Pydantic
+
+le fonctionnement du modèle ML (dimensions, types, etc.)
+
+🔹 Lancer tous les tests
+bash
+Copy code
 pytest
+🔹 Avec affichage détaillé
+bash
+Copy code
+pytest -v
+🔹 Avec rapport de couverture
+bash
+Copy code
+pytest --cov=app --cov-report=term-missing
 
 
-Valide que le code fonctionne avant de continuer
+🧠 Modèle de Machine Learning
+🔹 Type de modèle
+Le modèle utilisé est un :
 
-✔️ 2. Build
+RandomForestClassifier (scikit-learn)
 
-Vérifie que les dépendances sont installables
+Caractéristiques typiques (à adapter à ton code exact) :
 
-S’assure que le projet peut être construit sans erreur
+n_estimators : 100 – 500
 
-✔️ 3. Déploiement automatique
+Gère bien les relations non linéaires
 
-Si les étapes précédentes réussissent, la mise en production est déclenchée :
+Robuste au bruit et aux variables corrélées
 
-Création / mise à jour automatique du Space Hugging Face
+🔹 Données d’entrée
+Le modèle utilise plusieurs variables comme :
 
-Upload du projet via HfApi
+age
 
-Déploiement instantané 
+annee_experience_totale
 
- Exemple de code (app.py)
-import gradio as gr
+revenu_mensuel
 
-def greet(name):
-    return f"Hello {name}! 
+distance_domicile_travail
 
-demo = gr.Interface(
-    fn=greet,
-    inputs="text",
-    outputs="text",
-    title="Hello Space",
-    description="Application ML déployée automatiquement avec CI/CD "
-)
+nb_formations_suivies
 
-if __name__ == "__main__":
-    demo.launch()
+nombre_heures_travaillees
 
-Tests
+frequence_deplacement (catégorielle : "Jamais", "Rarement", "Souvent")
 
-Un test minimal a été créé pour valider la structure :
+Ces variables sont converties/encodées dans le même format que lors de l’entraînement du modèle.
 
-def test_ok():
-    assert 1 + 1 == 2
+🔹 Performances (à compléter)
 
-Déploiement
 
-Le déploiement est automatique :
+Accuracy : …
 
-Tu fais un git push origin main
+F1-score : …
 
-GitHub Actions lance le pipeline
+Recall : …
 
-Le Space Hugging Face est mis à jour
+Precision : …
 
-L'application est reconstruite et mise en ligne
+Et éventuellement :
 
- Lien vers l’application
+Courbe ROC-AUC
 
- (Ajoute ton lien Hugging Face ici une fois le déploiement final terminé)
+Matrice de confusion
 
- Auteur
+🔹 Limites du modèle
+Performances dépendantes de la qualité des données d’entraînement
 
-Projet réalisé par Anna HARBA, dans le cadre du projet OpenClassrooms – Data Analyst.
-pip install -r requirements.txt
+Risque de biais si le dataset est déséquilibré
+
+Interprétabilité plus faible qu’un modèle linéaire
+
+🗄️ Base de données (si utilisée)
+
+
+Exemple de table :
+
+model_inputs ou predictions :
+
+id : identifiant unique
+
+input_data : données d’entrée (JSON ou colonnes normalisées)
+
+prediction : 0 ou 1
+
+created_at : timestamp
+
+(optionnel) model_version
+
+Les scripts de création peuvent être :
+
+via SQLAlchemy (code Python)
+
+via script SQL (fichier .sql)
+
+🔐 Sécurité (niveau de base)
+
+
+Validation stricte des entrées avec Pydantic
+
+Utilisation de variables d’environnement pour la configuration (.env)
+
+Pas de secrets (mots de passe, clés) dans le code versionné
+
+🔜 Améliorations possibles :
+
+Authentification JWT
+
+Gestion des rôles utilisateurs
+
+Rate limiting
+
+🔄 CI/CD (optionnel / améliorable)
+
+
+Un pipeline GitHub Actions qui :
+
+lance les tests
+
+génère le rapport de couverture
+
+vérifie l’installation du projet
+
+déploie sur un serveur ou sur un service (Railway, Render, etc.)
+
+Pour l’instant, tu peux simplement mentionner :
+
+Le projet est prêt à être intégré dans un pipeline CI/CD (tests automatisés via Pytest, dépendances listées dans requirements.txt, configuration externe via .env).
+
+📊 Monitoring et évolution
+Endpoint /predict utilisé comme point central pour la prédiction
+
+Possibilité de logger les requêtes pour analyser les usages
+
+Possibilité d’améliorer le modèle en réentraînant régulièrement avec de nouvelles données
+
+🤝 Contribution
+Forker le projet
+
+Créer une branche :
+
+bash
+Copy code
+git checkout -b feature/nouvelle-fonctionnalite
+Committer les changements :
+
+bash
+Copy code
+git commit -m "Ajout d'une nouvelle fonctionnalité"
+Pousser la branche :
+
+bash
+Copy code
+git push origin feature/nouvelle-fonctionnalite
+Ouvrir une Pull Request
+
+📝 Versions
+
+
+bash
+Copy code
+git tag -l
+git tag v1.0.0
+git push origin v1.0.0
+📄 Licence
+Ce projet peut être distribué sous licence MIT (ou une autre licence de ton choix).
+
+👤 Auteur & Remerciements
+Auteur : ANNA <Ton nom>
+
+Remerciements :
+
+OpenClassrooms pour le projet
+
+La communauté FastAPI
+
+La communauté Python / Machine Learning
