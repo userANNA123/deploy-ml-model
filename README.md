@@ -25,24 +25,23 @@
 
 ---
 
-## 🎓 Qu’allez-vous apprendre dans ce projet ?
+##  ce projet ?
 
-Dans ce projet, vous allez consolider vos compétences en déployant un modèle de Machine Learning dans un environnement prêt pour la production.
+Dans ce projet, vous allez consolider  compétences en déployant un modèle de Machine Learning dans un environnement prêt pour la production.
 
-Vous allez découvrir :
 
-- 🚀 **Le développement d’API avec FastAPI**
-- 🧪 **Les tests unitaires avec Pytest**
-- 🔄 **La gestion des versions avec Git**
-- ⚙️ **La création d’un pipeline CI/CD avec GitHub Actions**
-- ☁️ **Le déploiement sur Hugging Face Spaces (Gradio)**
-- 🗄️ **L’organisation d’un projet ML conforme aux standards professionnels**
+-  **Le développement d’API avec FastAPI**
+-  **Les tests unitaires avec Pytest**
+-  **La gestion des versions avec Git**
+-  **La création d’un pipeline CI/CD avec GitHub Actions**
+-  **Le déploiement sur Hugging Face Spaces (Gradio)**
+- **L’organisation d’un projet ML conforme aux standards professionnels**
 
 Ces notions sont indispensables pour industrialiser un modèle ML et garantir sa fiabilité.
 
 ---
 
-## 🧭 Étapes du projet (selon OpenClassrooms)
+## Étapes du projet (selon OpenClassrooms)
 
 ### ✅ **Étape 1 — Mettre en place un système de gestion de version et collaboration**
 - Création du repository GitHub  
