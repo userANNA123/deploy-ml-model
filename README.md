@@ -1,65 +1,125 @@
 <!-- PROJECT SHIELDS -->
-<p align="center">
-  <img src="https://img.shields.io/github/contributors/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/github/forks/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/github/stars/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/github/issues/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/github/actions/workflow/status/userANNA123/deploy-ml-model/ci-cd.yml?style=for-the-badge&label=CI/CD" />
-</p>
+![Contributors](https://img.shields.io/github/contributors/userANNA123/deploy-ml-model?style=for-the-badge)
+![Forks](https://img.shields.io/github/forks/userANNA123/deploy-ml-model?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/userANNA123/deploy-ml-model?style=for-the-badge)
+![Issues](https://img.shields.io/github/issues/userANNA123/deploy-ml-model?style=for-the-badge)
+![MIT License](https://img.shields.io/github/license/userANNA123/deploy-ml-model?style=for-the-badge)
+![CI/CD](https://img.shields.io/github/actions/workflow/status/userANNA123/deploy-ml-model/ci-cd.yml?label=CI%2FCD&style=for-the-badge)
 
-<br>
+<br/>
 
 <!-- PROJECT LOGO -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" width="120" alt="Logo">
+  <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" alt="Logo" width="120">
 </p>
 
-<h2 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face</h2>
+<h2 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face 🚀</h2>
 
 <p align="center">
-  Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.<br>
-  <a href="#">📘 Explorer la documentation</a> ·
-  <a href="#">🐞 Reporter un bug</a> ·
-  <a href="#">✨ Demander une fonctionnalité</a>
+  Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.  
+  <br/>
+  <a href="#"> Explorer la documentation</a> ·
+  <a href="#"> Reporter un bug</a> ·
+  <a href="#"> Demander une fonctionnalité</a>
 </p>
 
 ---
 
+## 🎓 Qu’allez-vous apprendre dans ce projet ?
+
+Dans ce projet, vous allez consolider vos compétences en déployant un modèle de Machine Learning dans un environnement prêt pour la production.
+
+Vous allez découvrir :
+
+- 🚀 **Le développement d’API avec FastAPI**
+- 🧪 **Les tests unitaires avec Pytest**
+- 🔄 **La gestion des versions avec Git**
+- ⚙️ **La création d’un pipeline CI/CD avec GitHub Actions**
+- ☁️ **Le déploiement sur Hugging Face Spaces (Gradio)**
+- 🗄️ **L’organisation d’un projet ML conforme aux standards professionnels**
+
+Ces notions sont indispensables pour industrialiser un modèle ML et garantir sa fiabilité.
+
+---
+
+## 🧭 Étapes du projet (selon OpenClassrooms)
+
+### ✅ **Étape 1 — Mettre en place un système de gestion de version et collaboration**
+- Création du repository GitHub  
+- Structure du projet  
+- Branches main / develop  
+- Commits clairs & conventions  
+
+### ✅ **Étape 2 — Configurer la CI/CD**
+- Mise en place du workflow GitHub Actions  
+- Installation des dépendances  
+- Pipeline complet :  
+  - Tests  
+  - Build  
+  - Déploiement automatique  
+- Déploiement vers Hugging Face Spaces via API
+
+### ✅ **Étape 3 — Développement de l’API**
+- Implémentation de FastAPI / or Gradio  
+- Endpoints pour les prédictions  
+- Validation des données (Pydantic)
+
+### ✅ **Étape 4 — Gestion des données via PostgreSQL**
+- Importation du dataset  
+- Création des tables  
+- Requêtes SQL (si applicable)
+
+### ✅ **Étape 5 — Développer des tests unitaires & fonctionnels**
+- Tests Pytest  
+- Test du modèle  
+- Test de l’API  
+- Test du pipeline
+
+### ✅ **Étape 6 — Documentation du modèle**
+- README complet  
+- Documentation API  
+- Choix techniques & architecture  
+- Instructions d’installation et exécution
+
+---
+
+## 🏗️ Architecture du projet
 
 
-Ce pipeline garantit que chaque modification poussée dans la branche main est automatiquement :
-
-testée
-
-validée
-
-déployée en production
-
- Objectifs principaux
-
-Mettre en place un pipeline CI/CD complet
-
-Déployer automatiquement un modèle ML sur Hugging Face
-
-Automatiser les tests unitaires
-
-Gérer différents environnements : développement → production
-
-Assurer une qualité continue du code
-
- Architecture du projet
 deploy-ml-model/
 │
-├── app.py              # Application Gradio exposée
-├── requirements.txt    # Dépendances
-├── tests/              # Tests unitaires (pytest)
-│   └── test_sanity.py
+├── app.py
+├── requirements.txt
+├── README.md
+├── src/
+│ ├── app/
+│ │ ├── api.py
+│ │ ├── model.py
+│ │ └── schemas.py
+│ └── db/
+│ └── config.py
 │
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml   # Pipeline CI/CD complet
+├── tests/
+│ ├── test_api.py
+│ └── test_sanity.py
 │
+└── .github/
+└── workflows/
+└── ci-cd.yml
+
+yaml
+Copy code
+
 └── README.md           # Documentation
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/userANNA123/deploy-ml-model.git
+cd deploy-ml-model
+pip install -r requirements.txt
 
 Technologies utilisées
 Technologie	Rôle
