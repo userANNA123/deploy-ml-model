@@ -1,32 +1,30 @@
 <!-- PROJECT SHIELDS -->
-![Contributors](https://img.shields.io/github/contributors/userANNA123/deploy-ml-model.svg?style=for-the-badge)
-![Forks](https://img.shields.io/github/forks/userANNA123/deploy-ml-model.svg?style=for-the-badge)
-![Stargazers](https://img.shields.io/github/stars/userANNA123/deploy-ml-model.svg?style=for-the-badge)
-![Issues](https://img.shields.io/github/issues/userANNA123/deploy-ml-model.svg?style=for-the-badge)
-![MIT License](https://img.shields.io/github/license/userANNA123/deploy-ml-model.svg?style=for-the-badge)
-![CI/CD](https://img.shields.io/github/actions/workflow/status/userANNA123/deploy-ml-model/ci-cd.yml?label=CI%2FCD&style=for-the-badge)
+<p align="center">
+  <img src="https://img.shields.io/github/contributors/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
+  <img src="https://img.shields.io/github/forks/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
+  <img src="https://img.shields.io/github/stars/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
+  <img src="https://img.shields.io/github/issues/userANNA123/deploy-ml-model.svg?style=for-the-badge" />
+  <img src="https://img.shields.io/github/actions/workflow/status/userANNA123/deploy-ml-model/ci-cd.yml?style=for-the-badge&label=CI/CD" />
+</p>
+
+<br>
 
 <!-- PROJECT LOGO -->
-<br />
 <p align="center">
-  <a href="#">
-    <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" alt="Logo" width="120">
-  </a>
+  <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" width="120" alt="Logo">
+</p>
 
-  <h3 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face</h3>
+<h2 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face</h2>
 
-  <p align="center">
-    Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.
-    <br />
-    <a href="#">📘 Explorer la documentation</a>
-    ·
-    <a href="#">🐞 Reporter un bug</a>
-    ·
-    <a href="#">✨ Demander une fonctionnalité</a>
-  </p>
+<p align="center">
+  Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.<br>
+  <a href="#">📘 Explorer la documentation</a> ·
+  <a href="#">🐞 Reporter un bug</a> ·
+  <a href="#">✨ Demander une fonctionnalité</a>
 </p>
 
 ---
+
 
 
 Ce pipeline garantit que chaque modification poussée dans la branche main est automatiquement :
@@ -63,14 +61,14 @@ deploy-ml-model/
 │
 └── README.md           # Documentation
 
-🔧 Technologies utilisées
+Technologies utilisées
 Technologie	Rôle
 Python 3.11	Langage principal
 Gradio	Interface Web
 Hugging Face Hub	Hébergement de l'application
 GitHub Actions	Automatisation CI/CD
 Pytest	Exécution des tests unitaires
-⚙️ Pipeline CI/CD – Explication
+ Pipeline CI/CD – Explication
 
 Le fichier .github/workflows/ci-cd.yml comporte 3 jobs :
 
@@ -101,7 +99,7 @@ Upload du projet via HfApi
 
 Déploiement instantané 
 
-📄 Exemple de code (app.py)
+ Exemple de code (app.py)
 import gradio as gr
 
 def greet(name):
