@@ -1,0 +1,5 @@
+Churn Prediction API — Déploiement d’un Modèle de Machine Learning
+
+API professionnelle développée avec FastAPI, SQLAlchemy, PostgreSQL et scikit-learn, permettant de prédire le risque de churn (départ d’un employé) via un modèle RandomForest entraîné hors-ligne.
+
+L’API expose un endpoint /predict, enregistre chaque input/output en base de données, et applique un pipeline de features engineering cohérent entre entraînement et production.
