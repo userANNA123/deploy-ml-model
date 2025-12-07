@@ -125,296 +125,147 @@ project/
 │── requirements.txt         # Dépendances Python
 │── README.md                # Documentation principale
 │── .env.example             # Exemple de configuration d'environnement
+Installation
+1️⃣ Cloner le projet
+git clone https://github.com/userANNA123/deploy-ml-model.git
+cd deploy-ml-model
 
-🛠️ Installation
-🔹 Prérequis
+2️⃣ Créer un environnement virtuel
+python -m venv .venv
+source .venv/bin/activate  # Linux / Mac
+.\.venv\Scripts\activate   # Windows
 
-Python 3.9 ou supérieur
-
-(Optionnel mais recommandé) PostgreSQL si tu enregistres les prédictions dans une base
-
-Git
-
-Un compte GitHub (pour versionner le projet)
-
-🔹 Cloner le dépôt
-
-git clone https://github.com/<ton-utilisateur>/<ton-repo>.git
-cd <ton-repo>
-
-🔹 Créer un environnement virtuel
-bash
-Copy code
-python -m venv venv
-source venv/bin/activate      # Sur Linux / macOS
-venv\Scripts\activate         # Sur Windows
-🔹 Installer les dépendances
-bash
-Copy code
-pip install --upgrade pip setuptools wheel
+3️⃣ Installer les dépendances
 pip install -r requirements.txt
-⚙️ Configuration (optionnel : base de données)
+
+🗄️ Base de données PostgreSQL
+
+Créer la base :
+
+CREATE DATABASE churn_db;
+CREATE USER churn_user WITH PASSWORD 'Anna2025';
+GRANT ALL PRIVILEGES ON DATABASE churn_db TO churn_user;
 
 
-env
-Copy code
-# Database (optionnel)
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/ml_db
+Configuration dans src/app/db.py :
 
-# API
-API_HOST=0.0.0.0
-API_PORT=8000
-
-# Environment
-ENVIRONMENT=development
-DEBUG=True
+DATABASE_URL = "postgresql+psycopg://churn_user:Anna2025@localhost:5432/churn_db"
 
 
-📖 Utilisation
-🔹 Démarrer l’API
-En développement (rechargement automatique) :
+Créer les tables :
 
-bash
-Copy code
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-En production (sans --reload) :
+python -m src.app.db
 
-bash
-Copy code
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-L’API sera accessible à l’adresse :
-👉 http://localhost:8000
+▶️ Lancer l’API
+uvicorn src.app.main:app --reload
 
-🔹 Documentation interactive
-Une fois l’API démarrée, tu peux accéder à :
 
-Swagger UI : http://localhost:8000/docs
+API accessible sur :
 
-ReDoc : http://localhost:8000/redoc
+👉 http://127.0.0.1:8000
 
-Schéma OpenAPI : http://localhost:8000/openapi.json
+📘 Documentation interactive (Swagger)
 
-📡 Exemples de requêtes
-✅ Endpoint de prédiction
-URL : POST http://localhost:8000/predict
+👉 http://127.0.0.1:8000/docs
 
-Body JSON d’exemple (adapté à ton PredictionRequest) :
+👉 http://127.0.0.1:8000/redoc
 
-json
-Copy code
+🔮 Endpoint /predict
+📌 URL
+POST http://127.0.0.1:8000/predict
+
+📥 Input (Pydantic : PredictionRequest)
 {
-  "age": 34,
+  "age": 30,
   "annee_experience_totale": 5,
-  "revenu_mensuel": 2500.0,
-  "distance_domicile_travail": 7.5,
+  "revenu_mensuel": 3000,
+  "distance_domicile_travail": 10,
   "nb_formations_suivies": 2,
-  "nombre_heures_travaillees": 38.0,
+  "nombre_heures_travaillees": 160,
   "frequence_deplacement": "Rarement"
 }
-Réponse JSON (exemple) :
 
-json
-Copy code
+📤 Output
 {
-  "prediction": 0
+  "prediction": 1
 }
-où :
 
-0 = reste
+🧠 Modèle Machine Learning
 
-1 = churn / départ
+Dans ml_model.py, le modèle est chargé UNE SEULE FOIS :
 
-💻 Exemple avec curl
-bash
-Copy code
-curl -X POST "http://localhost:8000/predict" \
+MODEL_PATH = Path(__file__).resolve().parents[2] / "model" / "churn_model.joblib"
+model = joblib.load(MODEL_PATH)
+
+Feature Engineering
+
+✔️ One-hot encoding
+✔️ Variables dérivées :
+
+experience_to_age
+
+salary_category
+
+long_commute
+
+training_hours_per_year
+
+work_life_balance
+
+🧪 Tests unitaires
+Lancer tous les tests :
+pytest -v
+
+Exemple :
+def test_predict_from_dict_returns_0_or_1():
+    y = predict_from_dict(VALID_DATA)
+    assert y in [0, 1]
+
+📜 Requirements.txt
+
+Version professionnelle recommandée :
+
+# Core Framework
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+
+# Data Validation
+pydantic==2.7.1
+
+# Database
+sqlalchemy==2.0.44
+psycopg[binary]==3.2.1
+
+# Machine Learning
+scikit-learn==1.4.2
+pandas==2.1.4
+numpy>=1.26.0
+joblib==1.3.2
+
+# Testing
+pytest==7.4.3
+httpx==0.27.2
+
+# API Docs & uploads
+python-multipart==0.0.20
+
+# Env
+python-dotenv==1.2.1
+
+📊 Exemple complet de requête (via cURL)
+curl -X POST "http://127.0.0.1:8000/predict" \
   -H "Content-Type: application/json" \
   -d '{
-    "age": 34,
+    "age": 30,
     "annee_experience_totale": 5,
-    "revenu_mensuel": 2500.0,
-    "distance_domicile_travail": 7.5,
+    "revenu_mensuel": 3000,
+    "distance_domicile_travail": 10,
     "nb_formations_suivies": 2,
-    "nombre_heures_travaillees": 38.0,
+    "nombre_heures_travaillees": 160,
     "frequence_deplacement": "Rarement"
   }'
-🧪 Tests
-Les tests sont écrits avec Pytest et couvrent :
-
-la bonne réponse de l’API (/predict)
-
-la validation des données par les schémas Pydantic
-
-le fonctionnement du modèle ML (dimensions, types, etc.)
-
-🔹 Lancer tous les tests
-bash
-Copy code
-pytest
-🔹 Avec affichage détaillé
-bash
-Copy code
-pytest -v
-🔹 Avec rapport de couverture
-bash
-Copy code
-pytest --cov=app --cov-report=term-missing
-
-
-🧠 Modèle de Machine Learning
-🔹 Type de modèle
-Le modèle utilisé est un :
-
-RandomForestClassifier (scikit-learn)
-
-Caractéristiques typiques (à adapter à ton code exact) :
-
-n_estimators : 100 – 500
-
-Gère bien les relations non linéaires
-
-Robuste au bruit et aux variables corrélées
-
-🔹 Données d’entrée
-Le modèle utilise plusieurs variables comme :
-
-age
-
-annee_experience_totale
-
-revenu_mensuel
-
-distance_domicile_travail
-
-nb_formations_suivies
-
-nombre_heures_travaillees
-
-frequence_deplacement (catégorielle : "Jamais", "Rarement", "Souvent")
-
-Ces variables sont converties/encodées dans le même format que lors de l’entraînement du modèle.
-
-🔹 Performances (à compléter)
-
-
-Accuracy : …
-
-F1-score : …
-
-Recall : …
-
-Precision : …
-
-Et éventuellement :
-
-Courbe ROC-AUC
-
-Matrice de confusion
-
-🔹 Limites du modèle
-Performances dépendantes de la qualité des données d’entraînement
-
-Risque de biais si le dataset est déséquilibré
-
-Interprétabilité plus faible qu’un modèle linéaire
-
-🗄️ Base de données (si utilisée)
-
-
-Exemple de table :
-
-model_inputs ou predictions :
-
-id : identifiant unique
-
-input_data : données d’entrée (JSON ou colonnes normalisées)
-
-prediction : 0 ou 1
-
-created_at : timestamp
-
-(optionnel) model_version
-
-Les scripts de création peuvent être :
-
-via SQLAlchemy (code Python)
-
-via script SQL (fichier .sql)
-
-🔐 Sécurité (niveau de base)
-
-
-Validation stricte des entrées avec Pydantic
-
-Utilisation de variables d’environnement pour la configuration (.env)
-
-Pas de secrets (mots de passe, clés) dans le code versionné
-
-🔜 Améliorations possibles :
-
-Authentification JWT
-
-Gestion des rôles utilisateurs
-
-Rate limiting
-
-🔄 CI/CD (optionnel / améliorable)
-
-
-Un pipeline GitHub Actions qui :
-
-lance les tests
-
-génère le rapport de couverture
-
-vérifie l’installation du projet
-
-déploie sur un serveur ou sur un service (Railway, Render, etc.)
-
-Pour l’instant, tu peux simplement mentionner :
-
-Le projet est prêt à être intégré dans un pipeline CI/CD (tests automatisés via Pytest, dépendances listées dans requirements.txt, configuration externe via .env).
-
-📊 Monitoring et évolution
-Endpoint /predict utilisé comme point central pour la prédiction
-
-Possibilité de logger les requêtes pour analyser les usages
-
-Possibilité d’améliorer le modèle en réentraînant régulièrement avec de nouvelles données
-
-🤝 Contribution
-Forker le projet
-
-Créer une branche :
-
-bash
-Copy code
-git checkout -b feature/nouvelle-fonctionnalite
-Committer les changements :
-
-bash
-Copy code
-git commit -m "Ajout d'une nouvelle fonctionnalité"
-Pousser la branche :
-
-bash
-Copy code
-git push origin feature/nouvelle-fonctionnalite
-Ouvrir une Pull Request
-
-📝 Versions
-
-
-bash
-Copy code
-git tag -l
-git tag v1.0.0
-git push origin v1.0.0
-📄 Licence
-Ce projet peut être distribué sous licence MIT (ou une autre licence de ton choix).
-
 👤 Auteur & Remerciements
-Auteur : ANNA <Ton nom>
+Auteur : ANNA harba
 
 Remerciements :
 
@@ -423,3 +274,11 @@ OpenClassrooms pour le projet
 La communauté FastAPI
 
 La communauté Python / Machine Learning
+
+Fonctionnalités Clés
+Fonctionnalité,Description,Technologies
+ 
+Prédiction en temps réel,Endpoint /predict à faible latence.,"FastAPI, Random Forest"
+Validation des données,Entrées et sorties strictement validées.,Pydantic
+Traçabilité,Enregistrement de chaque requête (input/output) en base de données.,"SQLAlchemy, PostgreSQL"
+Maintenance facilitée,Documentation automatique et tests unitaires complets.,"Swagger/Redoc, Pytest"
