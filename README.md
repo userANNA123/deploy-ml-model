@@ -143,7 +143,7 @@ pip install -r requirements.txt
 Créer la base :
 
 CREATE DATABASE churn_db;
-CREATE USER churn_user WITH PASSWORD 'Anna2025';
+CREATE USER churn_user WITH PASSWORD '2025';
 GRANT ALL PRIVILEGES ON DATABASE churn_db TO churn_user;
 
 
