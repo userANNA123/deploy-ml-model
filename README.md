@@ -36,21 +36,21 @@ Le modèle est un Random Forest qui prédit si une personne (employé / client) 
 
 Ce projet met en place :
 
-✅ Une API REST avec FastAPI pour exposer le modèle
+ Une API REST avec FastAPI pour exposer le modèle
 
-✅ Un schéma d’entrée clairement défini avec Pydantic
+Un schéma d’entrée clairement défini avec Pydantic
 
-✅ Un modèle Random Forest pré-entraîné et chargé depuis un fichier
+ Un modèle Random Forest pré-entraîné et chargé depuis un fichier
 
-✅ Une documentation interactive automatique de l’API (Swagger / OpenAPI)
+ Une documentation interactive automatique de l’API (Swagger / OpenAPI)
 
-✅ Une base pour les tests unitaires et fonctionnels avec Pytest
+Une base pour les tests unitaires et fonctionnels avec Pytest
 
 Client : Futurisys
 Contexte : Projet professionnel – Déploiement d’un modèle ML en production
 Auteur : ANNA <Ton nom complet>
 
-🎯 Livrables
+ Livrables
 
 ✅ Dépôt Git structuré (code, modèle, tests, documentation)
 
@@ -107,7 +107,7 @@ Auteur : ANNA <Ton nom complet>
 
 ---
 
-## 🏗️ Architecture du projet
+##  Architecture du projet
 project/
 │── app/
 │   ├── main.py              # Point d'entrée FastAPI
@@ -138,7 +138,7 @@ source .venv/bin/activate  # Linux / Mac
 3️⃣ Installer les dépendances
 pip install -r requirements.txt
 
-🗄️ Base de données PostgreSQL
+ Base de données PostgreSQL
 
 Créer la base :
 
@@ -156,25 +156,25 @@ Créer les tables :
 
 python -m src.app.db
 
-▶️ Lancer l’API
+ Lancer l’API
 uvicorn src.app.main:app --reload
 
 
 API accessible sur :
 
-👉 http://127.0.0.1:8000
+http://127.0.0.1:8000
 
 📘 Documentation interactive (Swagger)
 
-👉 http://127.0.0.1:8000/docs
+ http://127.0.0.1:8000/docs
 
-👉 http://127.0.0.1:8000/redoc
+ http://127.0.0.1:8000/redoc
 
 🔮 Endpoint /predict
-📌 URL
+ URL
 POST http://127.0.0.1:8000/predict
 
-📥 Input (Pydantic : PredictionRequest)
+ Input (Pydantic : PredictionRequest)
 {
   "age": 30,
   "annee_experience_totale": 5,
@@ -185,12 +185,12 @@ POST http://127.0.0.1:8000/predict
   "frequence_deplacement": "Rarement"
 }
 
-📤 Output
+ Output
 {
   "prediction": 1
 }
 
-🧠 Modèle Machine Learning
+ Modèle Machine Learning
 
 Dans ml_model.py, le modèle est chargé UNE SEULE FOIS :
 
@@ -221,7 +221,7 @@ def test_predict_from_dict_returns_0_or_1():
     y = predict_from_dict(VALID_DATA)
     assert y in [0, 1]
 
-📜 Requirements.txt
+ Requirements.txt
 
 Version professionnelle recommandée :
 
@@ -264,7 +264,7 @@ curl -X POST "http://127.0.0.1:8000/predict" \
     "nombre_heures_travaillees": 160,
     "frequence_deplacement": "Rarement"
   }'
-👤 Auteur & Remerciements
+ Auteur & Remerciements
 Auteur : ANNA harba
 
 Remerciements :
