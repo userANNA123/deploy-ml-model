@@ -11,18 +11,24 @@ class PredictionRequest(BaseModel):
     nombre_heures_travaillees: float = Field(..., ge=0)
     frequence_deplacement: Literal["Jamais", "Rarement", "Souvent"]
 
-    class Config:  # pour Pydantic v1
-        schema_extra = {
+    from pydantic import BaseModel, ConfigDict
+
+class PredictionRequest(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "age": 30,
                 "annee_experience_totale": 5,
-                "revenu_mensuel": 2500,
+                "revenu_mensuel": 3000,
                 "distance_domicile_travail": 10,
                 "nb_formations_suivies": 2,
-                "nombre_heures_travaillees": 40,
-                "frequence_deplacement": "Rarement",
+                "nombre_heures_travaillees": 160,
+                "frequence_deplacement": "Rarement"
             }
         }
+    )
+    # ... fields
+
 
 class PredictionResponse(BaseModel):
     prediction: int  # 0 = reste, 1 = churn 
