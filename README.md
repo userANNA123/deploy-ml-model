@@ -1,123 +1,65 @@
-<!-- PROJECT SHIELDS -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![License][license-shield]][license-url]
-
+<!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="#">
-    <img src="https://via.placeholder.com/120" alt="Logo" width="120">
+    <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" alt="Logo" width="120">
   </a>
 
-  <h3 align="center">Déploiement d’un Modèle de Machine Learning avec CI/CD & Hugging Face 🚀</h3>
+  <h3 align="center">Déploiement d’un Modèle Machine Learning avec CI/CD & Hugging Face</h3>
 
   <p align="center">
-   Un projet complet démontrant comment déployer un modèle ML en production avec une pipeline CI/CD.
-   <br />
-   <a href="#">Explorer la documentation »</a>
-   <br />
-   <br />
-   <a href="#">Voir la Demo</a>
-   ·
-   <a href="#">Signaler un Bug</a>
-   ·
-   <a href="#">Demander une Fonctionnalité</a>
+    Un pipeline complet pour tester, valider et déployer automatiquement un modèle de Machine Learning.
+    <br />
+    <a href="#">📘 Explorer la documentation</a>
+    ·
+    <a href="#">🐞 Reporter un bug</a>
+    ·
+    <a href="#">✨ Demander une fonctionnalité</a>
   </p>
 </p>
 
 ---
 
-## 🧭 Table of Contents
-
-- [À propos du projet](#à-propos-du-projet)
-- [Objectifs](#objectifs)
-- [Architecture du projet](#architecture-du-projet)
-- [Pipeline CI/CD](#pipeline-cicd)
-- [Technologies utilisées](#technologies-utilisées)
-- [Installation](#installation)
-- [Exécution locale](#exécution-locale)
-- [Déploiement](#déploiement)
-- [Auteur](#auteur)
-
----
-
-## 📌 À propos du projet
-
-Ce projet consiste à déployer un modèle Machine Learning dans un environnement cloud en utilisant :
-
-- **FastAPI ou Gradio** pour exposer une interface simple  
-- **Hugging Face Spaces** pour héberger l’application  
-- **GitHub Actions (CI/CD)** pour automatiser :
-  - les tests  
-  - la construction  
-  - et le déploiement automatique  
-
-Cela garantit que chaque modification poussée dans la branche `main` est automatiquement :
-
-✔ testée  
-✔ validée  
-✔ déployée  
+<!-- TABLE OF CONTENTS -->
+### 📚 Table des Matières
+<details>
+  <summary>Cliquer pour dérouler</summary>
+  <ol>
+    <li><a href="#-à-propos-du-projet">À propos du Projet</a></li>
+    <li><a href="#-pipeline-cicd--architecture">Pipeline CI/CD & Architecture</a></li>
+    <li><a href="#-technologies-utilisées">Technologies Utilisées</a></li>
+    <li><a href="#-installation">Installation</a></li>
+    <li><a href="#-utilisation">Utilisation</a></li>
+    <li><a href="#-structure-du-référentiel">Structure du Référentiel</a></li>
+    <li><a href="#-contributrice">Contributrice</a></li>
+  </ol>
+</details>
 
 ---
 
-## 🎯 Objectifs
+## 📌 À propos du Projet
 
-- Mettre en place un pipeline complet CI/CD  
-- Automatiser les tests unitaires  
-- Générer une application web simple pour exposer le modèle  
-- Déployer automatiquement sur **Hugging Face Spaces**  
+Ce projet met en place un pipeline complet d’automatisation CI/CD pour déployer un modèle de Machine Learning dans le cloud.
 
----
+Le système assure que chaque mise à jour de code soit :
 
-## 🏗 Architecture du projet
+- automatiquement **testée**
+- validée via GitHub Actions
+- puis **déployée** sur Hugging Face Spaces
 
-deploy-ml-model/
-├── app.py
-├── requirements.txt
-├── .github/
-│ └── workflows/
-│ └── ci-cd.yml
-├── tests/
-├── src/
-└── README.md
+Le but :  
+➡️ garantir une livraison continue, stable et 100% automatisée.
 
 ---
 
-## ⚙️ Pipeline CI/CD
+## ⚙️ Pipeline CI/CD — Architecture
 
-Voici les étapes automatisées par GitHub Actions :
+Voici l’architecture complète du workflow :
 
-1️⃣ **Tests**  
-Exécute pytest pour vérifier que le code fonctionne.
-
-2️⃣ **Build**  
-Installe les dépendances et vérifie que tout compile.
-
-3️⃣ **Déploiement Automatique**  
-Le pipeline :
-- crée ou met à jour le Space Hugging Face  
-- upload automatiquement les fichiers du repo  
-- relance l’application en ligne  
-
----
-
-## 🧰 Technologies utilisées
-
-| Outil | Usage |
-|-------|--------|
-| **Python 3.11** | Développement |
-| **Gradio** | Interface utilisateur simple |
-| **HuggingFace Hub** | Déploiement cloud |
-| **GitHub Actions** | Automatisation CI/CD |
-| **Pytest** | Tests unitaires |
-
----
-
-## 🛠 Installation
-
-```bash
-git clone https://github.com/userANNA123/deploy-ml-model.git
-cd deploy-ml-model
-pip install -r requirements.txt
+```mermaid
+flowchart LR
+    A[Push Git ➜ main] --> B[GitHub Actions CI]
+    B --> C[Tests PyTest]
+    C --> D[Build & Validation]
+    D --> E[Déploiement Automatique sur Hugging Face]
+    E --> F[Application ML Disponible en Ligne]
