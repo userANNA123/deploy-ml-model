@@ -96,152 +96,96 @@ et la gestion des versions avec Git.  </h2>
 
 ---
 
- Description du Projet
+ 🚀 Déploiement d’un Modèle de Machine Learning avec FastAPI & CI/CD
+📌 Présentation du projet
 
-Ce projet consiste à déployer un modèle de Machine Learning en production à l’aide de FastAPI.
-Le modèle est un Random Forest qui prédit si une personne (employé / client) risque de quitter l’entreprise (churn / attrition) à partir de caractéristiques professionnelles.
+Ce projet consiste à déployer un modèle de Machine Learning (Random Forest) en production via une API REST FastAPI.
+L’API permet de prédire le churn (attrition) à partir de caractéristiques professionnelles.
 
-Ce projet met en place :
+Le projet intègre :
 
- Une API REST avec FastAPI pour exposer le modèle
+une API FastAPI
 
-Un schéma d’entrée clairement défini avec Pydantic
+une validation stricte des données avec Pydantic
 
- Un modèle Random Forest pré-entraîné et chargé depuis un fichier
+un modèle ML pré-entraîné
 
- Une documentation interactive automatique de l’API (Swagger / OpenAPI)
+une base de données PostgreSQL pour la traçabilité
 
-Une base pour les tests unitaires et fonctionnels avec Pytest
+des tests unitaires et fonctionnels
 
-Client : Futurisys
-Contexte : Projet professionnel – Déploiement d’un modèle ML en production
-Auteur : ANNA <Ton nom complet>
+un workflow CI/CD GitHub Actions
 
- Livrables
-
-✅ Dépôt Git structuré (code, modèle, tests, documentation)
-
-✅ API FastAPI fonctionnelle exposant un endpoint de prédiction
-
-✅ Modèle Random Forest sérialisé (par ex. model/random_forest.pkl)
-
-✅ Schémas Pydantic pour la validation des données d’entrée/sortie
-
-✅ Documentation Swagger / OpenAPI (via FastAPI)
-
-✅ README détaillé expliquant installation, utilisation et architecture
-
-✅ (Optionnel) Tests Pytest pour vérifier le bon fonctionnement du modèle et de l’API
-
-## Étapes du projet (selon OpenClassrooms)
-
-### ✅ **Étape 1 — Mettre en place un système de gestion de version et collaboration**
-- Création du repository GitHub  
-- Structure du projet  
-- Branches main / develop  
-- Commits clairs & conventions  
-
-### ✅ **Étape 2 — Configurer la CI/CD**
-- Mise en place du workflow GitHub Actions  
-- Installation des dépendances  
-- Pipeline complet :  
-  - Tests  
-  - Build  
-  - Déploiement automatique  
-- Déploiement vers Hugging Face Spaces via API
-
-### ✅ **Étape 3 — Développement de l’API**
-- Implémentation de FastAPI / or Gradio  
-- Endpoints pour les prédictions  
-- Validation des données (Pydantic)
-
-### ✅ **Étape 4 — Gestion des données via PostgreSQL**
-- Importation du dataset  
-- Création des tables  
-- Requêtes SQL (si applicable)
-
-### ✅ **Étape 5 — Développer des tests unitaires & fonctionnels**
-- Tests Pytest  
-- Test du modèle  
-- Test de l’API  
-- Test du pipeline
-
-### ✅ **Étape 6 — Documentation du modèle**
-- README complet  
-- Documentation API  
-- Choix techniques & architecture  
-- Instructions d’installation et exécution
-
----
-
-##  Architecture du projet
+🧱 Architecture du projet
 project/
-│── app/
-│   ├── main.py              # Point d'entrée FastAPI
-│   ├── api.py               # Routes de l'API (si séparé)
-│   ├── models.py            # Modèles SQLAlchemy (si BD utilisée)
-│   ├── schemas.py           # Schémas Pydantic (PredictionRequest, PredictionResponse)
-│   ├── services.py          # Logique de prédiction / chargement du modèle
-│   ├── database.py          # Connexion à la base PostgreSQL (optionnel)
+│── src/
+│   └── app/
+│       ├── main.py          # Point d’entrée FastAPI
+│       ├── schemas.py       # Schémas Pydantic
+│       ├── services.py      # Logique ML / prédiction
+│       ├── database.py      # Connexion PostgreSQL (SQLAlchemy)
+│       └── models.py        # Modèles ORM
 │── model/
-│   ├── random_forest.pkl    # Modèle ML sauvegardé
-│   ├── preprocessor.pkl     # Prétraitement (si utilisé)
+│   └── churn_model.joblib   # Modèle ML sauvegardé
 │── tests/
-│   ├── test_api.py          # Tests de l'API
-│   ├── test_model.py        # Tests du modèle
-│── requirements.txt         # Dépendances Python
-│── README.md                # Documentation principale
-│── .env.example             # Exemple de configuration d'environnement
-Installation
+│   ├── test_api.py          # Tests API
+│   └── test_model.py        # Tests ML
+│── requirements.txt
+│── .env.example
+│── README.md
+
+⚙️ Installation
 1️⃣ Cloner le projet
 git clone https://github.com/userANNA123/deploy-ml-model.git
 cd deploy-ml-model
 
 2️⃣ Créer un environnement virtuel
 python -m venv .venv
-source .venv/bin/activate  # Linux / Mac
-.\.venv\Scripts\activate   # Windows
+source .venv/bin/activate    # Linux / Mac
+.\.venv\Scripts\activate    # Windows
 
 3️⃣ Installer les dépendances
 pip install -r requirements.txt
 
- Base de données PostgreSQL
-
-Créer la base :
-
+🗄️ Base de données PostgreSQL
+Création de la base
 CREATE DATABASE churn_db;
-CREATE USER churn_user WITH PASSWORD '2025';
+CREATE USER churn_user WITH PASSWORD '<PASSWORD>';
 GRANT ALL PRIVILEGES ON DATABASE churn_db TO churn_user;
 
+Configuration (variables d’environnement)
 
-Configuration dans src/app/db.py :
+Créer un fichier .env (non versionné) :
 
-DATABASE_URL = "postgresql+psycopg://churn_user:Anna2025@localhost:5432/churn_db"
+DATABASE_URL=postgresql+psycopg://<USER>:<PASSWORD>@localhost:5432/churn_db
 
 
-Créer les tables :
+Dans le code (database.py) :
 
-python -m src.app.db
+import os
+DATABASE_URL = os.getenv("DATABASE_URL")
 
- Lancer l’API
+
+🔐 Bonne pratique : les identifiants ne sont jamais stockés en clair dans le code ou le README.
+
+▶️ Lancer l’API
 uvicorn src.app.main:app --reload
 
 
-API accessible sur :
+API disponible sur :
+👉 http://127.0.0.1:8000
 
-http://127.0.0.1:8000
+Documentation interactive :
 
-📘 Documentation interactive (Swagger)
+Swagger : http://127.0.0.1:8000/docs
 
- http://127.0.0.1:8000/docs
-
- http://127.0.0.1:8000/redoc
+Redoc : http://127.0.0.1:8000/redoc
 
 🔮 Endpoint /predict
- URL
-POST http://127.0.0.1:8000/predict
+Requête POST
+POST /predict
 
- Input (Pydantic : PredictionRequest)
+Exemple d’entrée (JSON)
 {
   "age": 30,
   "annee_experience_totale": 5,
@@ -252,101 +196,39 @@ POST http://127.0.0.1:8000/predict
   "frequence_deplacement": "Rarement"
 }
 
- Output
+Réponse
 {
   "prediction": 1
 }
 
- Modèle Machine Learning
+🧪 Tests
 
-Dans ml_model.py, le modèle est chargé UNE SEULE FOIS :
-
-MODEL_PATH = Path(__file__).resolve().parents[2] / "model" / "churn_model.joblib"
-model = joblib.load(MODEL_PATH)
-
-Feature Engineering
-
-✔️ One-hot encoding
-✔️ Variables dérivées :
-
-experience_to_age
-
-salary_category
-
-long_commute
-
-training_hours_per_year
-
-work_life_balance
-
-🧪 Tests unitaires
 Lancer tous les tests :
+
 pytest -v
 
-Exemple :
-def test_predict_from_dict_returns_0_or_1():
-    y = predict_from_dict(VALID_DATA)
-    assert y in [0, 1]
 
- Requirements.txt
+Les tests couvrent :
 
-Version professionnelle recommandée :
+le chargement du modèle
 
-# Core Framework
-fastapi==0.110.0
-uvicorn[standard]==0.29.0
+la fonction de prédiction
 
-# Data Validation
-pydantic==2.7.1
+l’endpoint API /predict
 
-# Database
-sqlalchemy==2.0.44
-psycopg[binary]==3.2.1
+👩‍💻 Auteure
 
-# Machine Learning
-scikit-learn==1.4.2
-pandas==2.1.4
-numpy>=1.26.0
-joblib==1.3.2
+Anna Harba
+Projet réalisé dans le cadre du parcours Machine Learning Engineer / Data – OpenClassrooms.
 
-# Testing
-pytest==7.4.3
-httpx==0.27.2
+⭐ Points clés du projet
 
-# API Docs & uploads
-python-multipart==0.0.20
+API performante et documentée automatiquement
 
-# Env
-python-dotenv==1.2.1
+Validation stricte des données (Pydantic v2)
 
-📊 Exemple complet de requête (via cURL)
-curl -X POST "http://127.0.0.1:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "age": 30,
-    "annee_experience_totale": 5,
-    "revenu_mensuel": 3000,
-    "distance_domicile_travail": 10,
-    "nb_formations_suivies": 2,
-    "nombre_heures_travaillees": 160,
-    "frequence_deplacement": "Rarement"
-  }'
- Auteur & Remerciements
-Auteur : ANNA harba
+Traçabilité des prédictions en base de données
 
-Remerciements :
+Tests unitaires et fonctionnels
 
-OpenClassrooms pour le projet
-
-La communauté FastAPI
-
-La communauté Python / Machine Learning
-
-Fonctionnalités Clés
-Fonctionnalité,Description,Technologies
- 
-Prédiction en temps réel,Endpoint /predict à faible latence.,"FastAPI, Random Forest"
-Validation des données,Entrées et sorties strictement validées.,Pydantic
-Traçabilité,Enregistrement de chaque requête (input/output) en base de données.,"SQLAlchemy, PostgreSQL"
-Maintenance facilitée,Documentation automatique et tests unitaires complets.,"Swagger/Redoc, Pytest"
->>>>>>> 34a4adb3778616645e7ef15d825b03dbb2927402
+Architecture prête pour la production 

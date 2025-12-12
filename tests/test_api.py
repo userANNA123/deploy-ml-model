@@ -3,6 +3,7 @@ from httpx import AsyncClient, ASGITransport
 from src.app.main import app
 
 
+
 @pytest.mark.asyncio
 async def test_predict():
     transport = ASGITransport(app=app)
